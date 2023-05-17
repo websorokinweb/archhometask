@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Globalization;
 
 namespace archhometask
@@ -25,10 +25,10 @@ namespace archhometask
         }
         static string sortCharsSelecting(char[] arrayToSort)
         {
-            int minItemIndex = 0;
-            for (int j = 0; j < arrayToSort.Length; j++)
+            for (int j = 0; j < arrayToSort.Length - 1; j++)
             {
-                for (int i = j; i < arrayToSort.Length - 1; i++)
+                int minItemIndex = j;
+                for (int i = j; i < arrayToSort.Length; i++)
                 {
                     if (arrayToSort[minItemIndex] > arrayToSort[i])
                     {
@@ -89,15 +89,15 @@ namespace archhometask
             }
             return new string(arrayToSort);
         }
-        static string sortSzybki(char[] arrayToSort, int l, int r)
+        static void sortSzybki(char[] arrayToSort, int l, int r)
         {
             char temp;
             int i = l, j = r;
-            int x = arrayToSort[arrayToSort.Length - 1];
+            int x = arrayToSort[(l + r) / 2];
             while (i <= j)
             {
-                while (arrayToSort[i] < x && i < r) i++;
-                while (arrayToSort[j] < x && j > l) j--;
+                while (arrayToSort[i] < x) i++;
+                while (arrayToSort[j] > x) j--;
                 if (i <= j)
                 {
                     temp = arrayToSort[i];
@@ -106,10 +106,9 @@ namespace archhometask
                     i++;
                     j--;
                 }
-                if (l < j) sortSzybki(arrayToSort, l, j);
-                if (r > i) sortSzybki(arrayToSort, i, r);
             }
-            return new string(arrayToSort);
+            if (l < j) sortSzybki(arrayToSort, l, j);
+            if (r > i) sortSzybki(arrayToSort, i, r);
         }
         static string sortStogowy(char[] arrayToSort)
         {
@@ -144,17 +143,20 @@ namespace archhometask
         static void Main(string[] args)
         {
             string wordToSort = "sortowanie";
+            //string wordToSort = "cba";
 
             Console.Write("\nDONE Sortowanie przez proste wstawianie: ");
             Console.Write(simpleSorting(wordToSort.ToCharArray()));
-            Console.Write("\nSortowanie przez proste wybieranie: ");
+            Console.Write("\nDONE Sortowanie przez proste wybieranie: ");
             Console.Write(sortCharsSelecting(wordToSort.ToCharArray()));
             Console.Write("\nDONE Sortowanie bąbelkowe: ");
             Console.Write(sortBabelkowo(wordToSort.ToCharArray()));
             Console.Write("\nDONE Sortowanie koktajlowe: ");
             Console.Write(sortKoktajlowy(wordToSort.ToCharArray()));
             Console.Write("\nSortowanie szybkie: ");
-            Console.Write(sortSzybki(wordToSort.ToCharArray(), 0, -1));
+            char[] quickSortArray = wordToSort.ToCharArray();
+            sortSzybki(quickSortArray, 0, quickSortArray.Length - 1);
+            Console.Write(new string(quickSortArray));
             Console.Write("\nSortowanie stogowe: ");
             Console.Write(sortStogowy(wordToSort.ToCharArray()));
         }
