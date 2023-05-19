@@ -110,48 +110,55 @@ namespace archhometask
             if (l < j) sortSzybki(arrayToSort, l, j);
             if (r > i) sortSzybki(arrayToSort, i, r);
         }
+        static void makeTree(char[] array, int size, int index)
+        {
+            int largestIndex = index;
+            int leftChild = 2 * index + 1;
+            int rightChild = 2 * index + 2;
+            if (leftChild < size && array[leftChild] > array[largestIndex])
+            {
+                largestIndex = leftChild;
+            }
+            if (rightChild < size && array[rightChild] > array[largestIndex])
+            {
+                largestIndex = rightChild;
+            }
+            if (largestIndex != index)
+            {
+                char tempVar = array[index];
+                array[index] = array[largestIndex];
+                array[largestIndex] = tempVar;
+                makeTree(array, size, largestIndex);
+            }
+        }
         static string sortStogowy(char[] arrayToSort)
         {
-            char temp;
-            int topIndex = arrayToSort.Length - 1;
-            int bottomIndex = 0;
-            while (bottomIndex < topIndex)
+            int size = arrayToSort.Length;
+            for (int i = size / 2 - 1; i >= 0; i--)
             {
-                for (int i = topIndex; i > bottomIndex; i--)
-                {
-                    if (arrayToSort[i - 1] > arrayToSort[i])
-                    {
-                        temp = arrayToSort[i];
-                        arrayToSort[i] = arrayToSort[i - 1];
-                        arrayToSort[i - 1] = temp;
-                    }
-                }
-                bottomIndex++;
-                for (int i = bottomIndex; i < topIndex; i++)
-                {
-                    if (arrayToSort[i] > arrayToSort[i + 1])
-                    {
-                        temp = arrayToSort[i];
-                        arrayToSort[i] = arrayToSort[i + 1];
-                        arrayToSort[i + 1] = temp;
-                    }
-                }
-                topIndex--;
+                makeTree(arrayToSort, size, i);
+            }
+            for (int i = size - 1; i >= 0; i--)
+            {
+                char tempVar = arrayToSort[0];
+                arrayToSort[0] = arrayToSort[i];
+                arrayToSort[i] = tempVar;
+                makeTree(arrayToSort, i, 0);
             }
             return new string(arrayToSort);
         }
         static void Main(string[] args)
         {
-            string wordToSort = "sortowanie";
-            //string wordToSort = "cba";
+            string wordToSort = "SORTOWANIE";
+            // string wordToSort = "cba";
 
-            Console.Write("\nDONE Sortowanie przez proste wstawianie: ");
+            Console.Write("Sortowanie przez proste wstawianie: ");
             Console.Write(simpleSorting(wordToSort.ToCharArray()));
-            Console.Write("\nDONE Sortowanie przez proste wybieranie: ");
+            Console.Write("\nSortowanie przez proste wybieranie: ");
             Console.Write(sortCharsSelecting(wordToSort.ToCharArray()));
-            Console.Write("\nDONE Sortowanie bąbelkowe: ");
+            Console.Write("\nSortowanie bąbelkowe: ");
             Console.Write(sortBabelkowo(wordToSort.ToCharArray()));
-            Console.Write("\nDONE Sortowanie koktajlowe: ");
+            Console.Write("\nSortowanie koktajlowe: ");
             Console.Write(sortKoktajlowy(wordToSort.ToCharArray()));
             Console.Write("\nSortowanie szybkie: ");
             char[] quickSortArray = wordToSort.ToCharArray();
