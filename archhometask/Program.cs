@@ -154,10 +154,31 @@ namespace archhometask
                 Console.Write("{0} ", array[i]);
             }
         }
+        // public class CharOrInt
+        // {
+        //     public string Value;
+        //     public char[] charsArrayValue(){
+        //         return Value.ToCharArray();
+        //     }
+        //     public int[] intsArrayValue(){
+        //         string[] stringArrayToConvert = Value.Split(' ');
+        //         return Array.ConvertAll(stringArrayToConvert, s => int.Parse(s));
+        //     }
+        //     public bool isChar(){
+        //         return true;
+        //     }
+        //     public CharOrInt<T>(T value) where T : IComparable<T>
+        //     {
+
+        //     }
+        // }
         static void Main(string[] args)
         {
             Console.Write("Podaj tekst do posortowania: ");
             string dataToSort = Console.ReadLine();
+
+            // CharOrInt testData = new CharOrInt(dataToSort);
+            // Console.WriteLine(testData);
 
             // string stringToSort = "SORTOWANIE";
             // string stringToSort = "45 98 7 12";
