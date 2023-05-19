@@ -5,22 +5,23 @@ namespace archhometask
 {
     internal class Program
     {
-        static string simpleSorting(char[] arrayToSort)
+        static T[] simpleSorting<T>(T[] arrayToSort) where T : IComparable<T>
         {
-            char needItem;
+            T needItem;
             int j;
             for (int i = 1; i < arrayToSort.Length; i++)
             {
                 needItem = arrayToSort[i];
                 j = i - 1;
-                while (j >= 0 && needItem <= arrayToSort[j])
+                while (j >= 0 && needItem.CompareTo(arrayToSort[j]) < 0)
                 {
                     arrayToSort[j + 1] = arrayToSort[j];
                     j--;
                 }
                 arrayToSort[j + 1] = needItem;
             }
-            return new string(arrayToSort);
+            // return new string(arrayToSort);
+            return arrayToSort;
         }
         static string sortCharsSelecting(char[] arrayToSort)
         {
@@ -147,27 +148,49 @@ namespace archhometask
             }
             return new string(arrayToSort);
         }
+        static void displayResult<T>(T[] array) where T : IComparable<T>
+        {
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.Write("{0} ", array[i]);
+            }
+        }
         static void Main(string[] args)
         {
-            // Console.Write("Podaj tekst do posortowania: ");
-            // string wordToSort = Console.ReadLine();
-            string wordToSort = "SORTOWANIE";
-            // string wordToSort = "cba";
+            Console.Write("Podaj tekst do posortowania: ");
+            string dataToSort = Console.ReadLine();
+
+            // string stringToSort = "SORTOWANIE";
+            // string stringToSort = "45 98 7 12";
+            // string divider = " ";
+            // bool isChar = Char.IsLetter(stringToSort[0]);
+            // if(isChar){
+                // char[] dataToSort = stringToSort.ToCharArray();
+            // }else{
+                // string[] stringArrayToConvert = stringToSort.Split(divider);
+                // int[] dataToSort = Array.ConvertAll(stringArrayToConvert, s => int.Parse(s));
+            // }
+            // displayResult(dataToSort);
+
+            // string dataToSort = "SORTOWANIE";
+            // string dataToSort = "cba";
+            // int[] dataToSort = new int[] { 4, 2, 1, 6 };
+
 
             Console.Write("\nSortowanie przez proste wstawianie: ");
-            Console.Write(simpleSorting(wordToSort.ToCharArray()));
+            displayResult(simpleSorting(dataToSort.ToCharArray()));
             Console.Write("\nSortowanie przez proste wybieranie: ");
-            Console.Write(sortCharsSelecting(wordToSort.ToCharArray()));
+            Console.Write(sortCharsSelecting(dataToSort.ToCharArray()));
             Console.Write("\nSortowanie bąbelkowe: ");
-            Console.Write(sortBabelkowo(wordToSort.ToCharArray()));
+            Console.Write(sortBabelkowo(dataToSort.ToCharArray()));
             Console.Write("\nSortowanie koktajlowe: ");
-            Console.Write(sortKoktajlowy(wordToSort.ToCharArray()));
+            Console.Write(sortKoktajlowy(dataToSort.ToCharArray()));
             Console.Write("\nSortowanie szybkie: ");
-            char[] quickSortArray = wordToSort.ToCharArray();
+            char[] quickSortArray = dataToSort.ToCharArray();
             sortSzybki(quickSortArray, 0, quickSortArray.Length - 1);
             Console.Write(new string(quickSortArray));
             Console.Write("\nSortowanie stogowe: ");
-            Console.Write(sortStogowy(wordToSort.ToCharArray()));
+            Console.Write(sortStogowy(dataToSort.ToCharArray()));
         }
     }
 }
