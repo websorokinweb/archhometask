@@ -149,10 +149,12 @@ namespace archhometask
         }
         static void Main(string[] args)
         {
+            // Console.Write("Podaj tekst do posortowania: ");
+            // string wordToSort = Console.ReadLine();
             string wordToSort = "SORTOWANIE";
             // string wordToSort = "cba";
 
-            Console.Write("Sortowanie przez proste wstawianie: ");
+            Console.Write("\nSortowanie przez proste wstawianie: ");
             Console.Write(simpleSorting(wordToSort.ToCharArray()));
             Console.Write("\nSortowanie przez proste wybieranie: ");
             Console.Write(sortCharsSelecting(wordToSort.ToCharArray()));
