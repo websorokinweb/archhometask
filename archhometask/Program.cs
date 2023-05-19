@@ -7,7 +7,6 @@ namespace archhometask
     {
         static string simpleSorting(char[] arrayToSort)
         {
-            // startujemy z drugiego elementu
             char needItem;
             int j;
             for (int i = 1; i < arrayToSort.Length; i++)
@@ -134,7 +133,8 @@ namespace archhometask
         static string sortStogowy(char[] arrayToSort)
         {
             int size = arrayToSort.Length;
-            for (int i = size / 2 - 1; i >= 0; i--)
+            int startIndex = size / 2 - 1;
+            for (int i = startIndex; i >= 0; i--)
             {
                 makeTree(arrayToSort, size, i);
             }
