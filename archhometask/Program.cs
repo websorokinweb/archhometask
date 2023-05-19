@@ -20,36 +20,35 @@ namespace archhometask
                 }
                 arrayToSort[j + 1] = needItem;
             }
-            // return new string(arrayToSort);
             return arrayToSort;
         }
-        static string sortCharsSelecting(char[] arrayToSort)
+        static T[] sortCharsSelecting<T>(T[] arrayToSort) where T : IComparable<T>
         {
             for (int j = 0; j < arrayToSort.Length - 1; j++)
             {
                 int minItemIndex = j;
                 for (int i = j; i < arrayToSort.Length; i++)
                 {
-                    if (arrayToSort[minItemIndex] > arrayToSort[i])
+                    if (arrayToSort[minItemIndex].CompareTo(arrayToSort[i]) > 0)
                     {
                         minItemIndex = i;
                     }
 
                 }
-                char temp = arrayToSort[j];
+                T temp = arrayToSort[j];
                 arrayToSort[j] = arrayToSort[minItemIndex];
                 arrayToSort[minItemIndex] = temp;
             }
-            return new string(arrayToSort);
+            return arrayToSort;
         }
-        static string sortBabelkowo(char[] arrayToSort)
+        static T[] sortBabelkowo<T>(T[] arrayToSort) where T : IComparable<T>
         {
-            char temp;
+            T temp;
             for (int i = 0; i < arrayToSort.Length; i++)
             {
                 for (int j = arrayToSort.Length - 1; j > i; j--)
                 {
-                    if (arrayToSort[j - 1] > arrayToSort[j])
+                    if (arrayToSort[j - 1].CompareTo(arrayToSort[j]) > 0)
                     {
                         temp = arrayToSort[j];
                         arrayToSort[j] = arrayToSort[j - 1];
@@ -57,18 +56,18 @@ namespace archhometask
                     }
                 }
             }
-            return new string(arrayToSort);
+            return arrayToSort;
         }
-        static string sortKoktajlowy(char[] arrayToSort)
+        static T[] sortKoktajlowy<T>(T[] arrayToSort) where T : IComparable<T>
         {
-            char temp;
+            T temp;
             int topIndex = arrayToSort.Length - 1;
             int bottomIndex = 0;
             while (bottomIndex < topIndex)
             {
                 for (int i = topIndex; i > bottomIndex; i--)
                 {
-                    if (arrayToSort[i - 1] > arrayToSort[i])
+                    if (arrayToSort[i - 1].CompareTo(arrayToSort[i]) > 0)
                     {
                         temp = arrayToSort[i];
                         arrayToSort[i] = arrayToSort[i - 1];
@@ -78,7 +77,7 @@ namespace archhometask
                 bottomIndex++;
                 for (int i = bottomIndex; i < topIndex; i++)
                 {
-                    if (arrayToSort[i] > arrayToSort[i + 1])
+                    if (arrayToSort[i].CompareTo(arrayToSort[i + 1]) > 0)
                     {
                         temp = arrayToSort[i];
                         arrayToSort[i] = arrayToSort[i + 1];
@@ -87,17 +86,17 @@ namespace archhometask
                 }
                 topIndex--;
             }
-            return new string(arrayToSort);
+            return arrayToSort;
         }
-        static void sortSzybki(char[] arrayToSort, int l, int r)
+        static void sortSzybki<T>(T[] arrayToSort, int l, int r) where T : IComparable<T>
         {
-            char temp;
+            T temp;
             int i = l, j = r;
-            int x = arrayToSort[(l + r) / 2];
+            T x = arrayToSort[(l + r) / 2];
             while (i <= j)
             {
-                while (arrayToSort[i] < x) i++;
-                while (arrayToSort[j] > x) j--;
+                while (arrayToSort[i].CompareTo(x) < 0) i++;
+                while (arrayToSort[j].CompareTo(x) > 0) j--;
                 if (i <= j)
                 {
                     temp = arrayToSort[i];
@@ -110,28 +109,28 @@ namespace archhometask
             if (l < j) sortSzybki(arrayToSort, l, j);
             if (r > i) sortSzybki(arrayToSort, i, r);
         }
-        static void makeTree(char[] array, int size, int index)
+        static void makeTree<T>(T[] array, int size, int index) where T : IComparable<T>
         {
             int largestIndex = index;
             int leftChild = 2 * index + 1;
             int rightChild = 2 * index + 2;
-            if (leftChild < size && array[leftChild] > array[largestIndex])
+            if (leftChild < size && array[leftChild].CompareTo(array[largestIndex]) > 0)
             {
                 largestIndex = leftChild;
             }
-            if (rightChild < size && array[rightChild] > array[largestIndex])
+            if (rightChild < size && array[rightChild].CompareTo(array[largestIndex]) > 0)
             {
                 largestIndex = rightChild;
             }
             if (largestIndex != index)
             {
-                char tempVar = array[index];
+                T tempVar = array[index];
                 array[index] = array[largestIndex];
                 array[largestIndex] = tempVar;
                 makeTree(array, size, largestIndex);
             }
         }
-        static string sortStogowy(char[] arrayToSort)
+        static T[] sortStogowy<T>(T[] arrayToSort) where T : IComparable<T>
         {
             int size = arrayToSort.Length;
             int startIndex = size / 2 - 1;
@@ -141,12 +140,12 @@ namespace archhometask
             }
             for (int i = size - 1; i >= 0; i--)
             {
-                char tempVar = arrayToSort[0];
+                T tempVar = arrayToSort[0];
                 arrayToSort[0] = arrayToSort[i];
                 arrayToSort[i] = tempVar;
                 makeTree(arrayToSort, i, 0);
             }
-            return new string(arrayToSort);
+            return arrayToSort;
         }
         static void displayResult<T>(T[] array) where T : IComparable<T>
         {
@@ -172,25 +171,20 @@ namespace archhometask
             // }
             // displayResult(dataToSort);
 
-            // string dataToSort = "SORTOWANIE";
-            // string dataToSort = "cba";
-            // int[] dataToSort = new int[] { 4, 2, 1, 6 };
-
-
             Console.Write("\nSortowanie przez proste wstawianie: ");
             displayResult(simpleSorting(dataToSort.ToCharArray()));
             Console.Write("\nSortowanie przez proste wybieranie: ");
-            Console.Write(sortCharsSelecting(dataToSort.ToCharArray()));
+            displayResult(sortCharsSelecting(dataToSort.ToCharArray()));
             Console.Write("\nSortowanie bąbelkowe: ");
-            Console.Write(sortBabelkowo(dataToSort.ToCharArray()));
+            displayResult(sortBabelkowo(dataToSort.ToCharArray()));
             Console.Write("\nSortowanie koktajlowe: ");
-            Console.Write(sortKoktajlowy(dataToSort.ToCharArray()));
+            displayResult(sortKoktajlowy(dataToSort.ToCharArray()));
             Console.Write("\nSortowanie szybkie: ");
             char[] quickSortArray = dataToSort.ToCharArray();
             sortSzybki(quickSortArray, 0, quickSortArray.Length - 1);
-            Console.Write(new string(quickSortArray));
+            displayResult(quickSortArray);
             Console.Write("\nSortowanie stogowe: ");
-            Console.Write(sortStogowy(dataToSort.ToCharArray()));
+            displayResult(sortStogowy(dataToSort.ToCharArray()));
         }
     }
 }
